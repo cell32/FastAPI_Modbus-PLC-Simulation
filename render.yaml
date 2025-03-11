@@ -1,0 +1,24 @@
+services:
+  # Modbus Server service
+  - type: web
+    name: modbus-server
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python modbus_server_simulation.py # Command to run the Modbus server
+    envVars:
+      - key: MODBUS_SERVER_IP
+        value: "127.0.0.1" # Modbus server IP
+      - key: MODBUS_SERVER_PORT
+        value: "5020" # Modbus server port
+
+  # FastAPI Client service
+  - type: web
+    name: fastapi-client
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn fastapi_client:app --host 0.0.0.0 --port 10000 # Command to run the FastAPI client
+    envVars:
+      - key: MODBUS_SERVER_IP
+        value: "127.0.0.1" # IP address for the Modbus server
+      - key: MODBUS_SERVER_PORT
+        value: "5020" # Port for the Modbus server

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Machine Data</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 20px auto;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      .card {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .card h2 {
+        margin: 0;
+      }
+      .card p {
+        margin: 0;
+        font-size: 1.2em;
+      }
+      .card .value {
+        font-size: 2em;
+        color: #007bff;
+      }
+      .identity {
+        margin-top: 30px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .identity h3 {
+        margin: 0;
+        font-size: 1.5em;
+        color: #333;
+      }
+    </style>
+    <script>
+      async function fetchModbusData() {
+        try {
+          const response = await fetch(`/fetch_data?t=${new Date().getTime()}`);
+          const data = await response.json();
+
+          if (data.error) {
+            throw new Error(data.error);
+          }
+
+          document.getElementById("temperature").innerText =
+            data.temperature + " °C";
+          document.getElementById("oil_level").innerText = data.oil_level + "%";
+          document.getElementById("cycle_count").innerText = data.cycle_count;
+          document.getElementById("stops").innerText = data.stops;
+        } catch (error) {
+          console.error("Error fetching Modbus data:", error);
+          document.getElementById("temperature").innerText = "Error";
+          document.getElementById("oil_level").innerText = "Error";
+          document.getElementById("cycle_count").innerText = "Error";
+          document.getElementById("stops").innerText = "Error";
+        }
+      }
+
+      setInterval(fetchModbusData, 1500);
+      window.onload = fetchModbusData;
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Machine Data</h1>
+      <div class="card">
+        <div>
+          <h2>Temperature</h2>
+          <p id="temperature" class="value">Loading...</p>
+        </div>
+        <div>
+          <h2>Oil Level</h2>
+          <p id="oil_level" class="value">Loading...</p>
+        </div>
+      </div>
+      <div class="card">
+        <div>
+          <h2>Cycle Count</h2>
+          <p id="cycle_count" class="value">Loading...</p>
+        </div>
+        <div>
+          <h2>Stops</h2>
+          <p id="stops" class="value">Loading...</p>
+        </div>
+      </div>
+    </div>
+    <div class="identity">
+      <h3>Server Identity</h3>
+      <p><strong>Vendor Name:</strong> {{ identity['VendorName'] }}</p>
+      <p><strong>Product Code:</strong> {{ identity['ProductCode'] }}</p>
+      <p><strong>Product Name:</strong> {{ identity['ProductName'] }}</p>
+      <p><strong>Model Name:</strong> {{ identity['ModelName'] }}</p>
+      <p>
+        <strong>Vendor URL:</strong>
+        <a href="{{ identity['VendorUrl'] }}" target="_blank"
+          >{{ identity['VendorUrl'] }}</a
+        >
+      </p>
+      <p><strong>Version:</strong> {{ identity['MajorMinorRevision'] }}</p>
+    </div>
+  </body>
+</html>
