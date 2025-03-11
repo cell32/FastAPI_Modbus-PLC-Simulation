@@ -1,6 +1,6 @@
 services:
   # Modbus Server - Background Service
-  - type: pserv # Change from "web" to "pserv"
+  - type: pserv
     name: modbus-server
     runtime: python
     buildCommand: pip install -r requirements.txt
@@ -10,7 +10,7 @@ services:
         value: "0.0.0.0"
       - key: MODBUS_SERVER_PORT
         value: "5020"
-    disableHttpPortCheck: true # Add this line to disable HTTP port scanning
+    port: 8080 # Expose the dummy HTTP port
 
   # FastAPI Client - Web Service
   - type: web

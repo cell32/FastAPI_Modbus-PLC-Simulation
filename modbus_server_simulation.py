@@ -14,6 +14,20 @@ from pymodbus.device import ModbusDeviceIdentification
 from threading import Thread
 import random
 import time
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+# Dummy HTTP server to satisfy Render's port scanner
+class DummyHttpHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"OK")
+
+def run_http_server():
+    http_server = HTTPServer(("0.0.0.0", 8080), DummyHttpHandler)
+    print("Dummy HTTP server running on 0.0.0.0:8080")
+    http_server.serve_forever()
+
 
 # Define a function to update values dynamically
 def update_registers(context):
