@@ -29,7 +29,7 @@ app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
 # Modbus server details
-MODBUS_SERVER_IP =  os.getenv("MODBUS_SERVER_IP", "127.0.0.1")
+MODBUS_SERVER_IP =  os.getenv("MODBUS_SERVER_IP", "modbus-sever")
 MODBUS_SERVER_PORT = int(os.getenv("MODBUS_SERVER_PORT", 5020))
 
 def is_modbus_server_running(host=MODBUS_SERVER_IP, port=MODBUS_SERVER_PORT):
