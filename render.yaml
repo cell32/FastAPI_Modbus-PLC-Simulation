@@ -1,6 +1,6 @@
 services:
-  # Modbus Server - Background Service
-  - type: pserv
+  # Modbus Server - Web Service
+  - type: web # Change from "pserv" to "web"
     name: modbus-server
     runtime: python
     buildCommand: pip install -r requirements.txt
