@@ -136,6 +136,7 @@ def read_last_csv_row(file_path):
 # Scheduler to save data every 30 seconds
 scheduler = BackgroundScheduler()
 scheduler.add_job(func=lambda: save_data_to_csv(read_modbus_data()), trigger="interval", seconds=30)
+scheduler.add_job(func=lambda: save_data_to_csv(read_modbus_data()), trigger="interval", seconds=30)
 scheduler.start()
 
 # Shutdown scheduler when app exits

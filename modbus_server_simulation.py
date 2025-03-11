@@ -45,5 +45,5 @@ context = ModbusServerContext(slaves=store, single=True)
 Thread(target=update_registers, args=(context,), daemon=True).start()
 
 # Start Modbus TCP Server
-print("Starting Modbus Server on 127.0.0.1:5020...")
-StartTcpServer(context, address=("127.0.0.1", 5020))
+print("Starting Modbus Server on 0.0.0.0:5020...")
+StartTcpServer(context, address=("0.0.0.0", 5020))
