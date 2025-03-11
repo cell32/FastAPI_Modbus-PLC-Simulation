@@ -1,6 +1,6 @@
 services:
-  # Modbus Server service
-  - type: pserv
+  # Modbus Server - Background Service
+  - type: pserv # Change from "web" to "pserv"
     name: modbus-server
     runtime: python
     buildCommand: pip install -r requirements.txt
@@ -11,14 +11,14 @@ services:
       - key: MODBUS_SERVER_PORT
         value: "5020"
 
-  # FastAPI Client service
+  # FastAPI Client - Web Service
   - type: web
     name: fastapi-client
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn fastapi_client:app --host 0.0.0.0 --port $PORT
+    startCommand: uvicorn fastapi_client:app --host 0.0.0.0 --port 10000
     envVars:
       - key: MODBUS_SERVER_IP
-        value: "modbus-server" # Use internal Render service name
+        value: "modbus-server"
       - key: MODBUS_SERVER_PORT
         value: "5020"
