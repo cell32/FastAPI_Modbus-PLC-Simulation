@@ -10,6 +10,7 @@ services:
         value: "0.0.0.0"
       - key: MODBUS_SERVER_PORT
         value: "5020"
+    disableHttpPortCheck: true # Add this line to disable HTTP port scanning
 
   # FastAPI Client - Web Service
   - type: web
