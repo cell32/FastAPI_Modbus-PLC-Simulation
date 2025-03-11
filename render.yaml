@@ -1,6 +1,6 @@
 services:
-  # Modbus Server - Background Worker
-  - type: worker # Change from "web" or "pserv" to "worker"
+  # Modbus Server - Web Service (with FastAPI HTTP endpoint)
+  - type: web
     name: modbus-server
     runtime: python
     buildCommand: pip install -r requirements.txt
@@ -10,6 +10,7 @@ services:
         value: "0.0.0.0"
       - key: MODBUS_SERVER_PORT
         value: "5020"
+    port: 8080 # Expose the FastAPI HTTP port
 
   # FastAPI Client - Web Service
   - type: web
