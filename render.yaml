@@ -7,7 +7,7 @@ services:
     startCommand: python modbus_server_simulation.py # Command to run the Modbus server
     envVars:
       - key: MODBUS_SERVER_IP
-        value: "127.0.0.1" # Modbus server IP
+        value: "0.0.0.0" # Listen on all interfaces
       - key: MODBUS_SERVER_PORT
         value: "5020" # Modbus server port
 
@@ -19,6 +19,6 @@ services:
     startCommand: uvicorn fastapi_client:app --host 0.0.0.0 --port 10000 # Command to run the FastAPI client
     envVars:
       - key: MODBUS_SERVER_IP
-        value: "127.0.0.1" # IP address for the Modbus server
+        value: "modbus-server" # Use Render's internal service name
       - key: MODBUS_SERVER_PORT
         value: "5020" # Port for the Modbus server
